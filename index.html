@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ilay | портфолио</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500;600&family=Dancing+Script:wght@600;700&display=swap');
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            /* Более насыщенный красновато-розовый градиент */
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+            color: #4c0519; /* Dark rose for text */
+        }
+
+        .font-cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffe4e6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fb7185;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f43f5e;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 228, 230, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(225, 29, 72, 0.1), 0 2px 4px -1px rgba(225, 29, 72, 0.06);
+        }
+
+        /* Animation for background lines - More active */
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-30px) rotate(2deg) scale(1.05); }
+        }
+        @keyframes gentle-sway {
+            0%, 100% { transform: translateX(0) scale(1) rotate(-1deg); }
+            50% { transform: translateX(25px) scale(1.1) rotate(1deg); }
+        }
+        /* Faster durations */
+        .bg-line-anim-1 { animation: gentle-float 6s ease-in-out infinite; }
+        .bg-line-anim-2 { animation: gentle-sway 7s ease-in-out infinite; }
+
+        /* Floating Spheres Animation */
+        @keyframes float-sphere {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -50px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+        .animate-sphere-1 { animation: float-sphere 12s ease-in-out infinite; }
+        .animate-sphere-2 { animation: float-sphere 15s ease-in-out infinite reverse; }
+        .animate-sphere-3 { animation: float-sphere 18s ease-in-out infinite 2s; }
+
+        /* 3D Scroll Animations - Refined for maximum smoothness */
+        .perspective-viewport {
+            perspective: 1200px;
+        }
+        
+        .reveal-3d {
+            opacity: 0;
+            /* Subtler movement for a "gliding" feel */
+            transform: translateY(30px) rotateX(5deg) scale(0.96);
+            /* Longer duration with a very smooth ease-out curve */
+            transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1), transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+            transform-style: preserve-3d;
+        }
+        
+        .reveal-3d.active {
+            opacity: 1;
+            transform: translateY(0) rotateX(0) scale(1);
+        }
+
+        /* Liquid Hover Effect - Ultra Smooth */
+        .liquid-hover {
+            /* Using 'all' ensures any property change is smoothed out */
+            transition: all 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, box-shadow, opacity;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Soft Background Lines -->
+    <div class="fixed inset-0 -z-20 pointer-events-none opacity-50">
+        <!-- Line 1: Large curve - Peach/Soft Pink tones -->
+        <svg class="absolute w-[120%] h-[120%] -left-[10%] -top-[10%] bg-line-anim-1" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#ff9a9e;stop-opacity:0" />
+                    <stop offset="20%" style="stop-color:#ff9a9e;stop-opacity:0.6" />
+                    <stop offset="80%" style="stop-color:#f43f5e;stop-opacity:0.6" />
+                    <stop offset="100%" style="stop-color:#e11d48;stop-opacity:0" />
+                </linearGradient>
+            </defs>
+            <path d="M-10,110 Q50,40 120,0" stroke="url(#grad1)" stroke-width="0.8" fill="none" stroke-linecap="round" />
+        </svg>
+
+        <!-- Line 2: Subtle curve - Lighter Coral tones -->
+        <svg class="absolute w-[120%] h-[120%] -left-[10%] -top-[10%] bg-line-anim-2" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#fecdd3;stop-opacity:0" />
+                    <stop offset="40%" style="stop-color:#fb7185;stop-opacity:0.5" />
+                    <stop offset="100%" style="stop-color:#e11d48;stop-opacity:0" />
+                </linearGradient>
+            </defs>
+            <path d="M-10,30 Q60,70 120,60" stroke="url(#grad2)" stroke-width="0.5" fill="none" stroke-linecap="round" />
+        </svg>
+
+        <!-- Decorative Blurs - Warmer peach/pink -->
+        <div class="absolute top-[20%] right-[10%] w-96 h-96 bg-rose-200/30 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-[10%] left-[5%] w-72 h-72 bg-pink-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+
+        <!-- 3D Floating Spheres (mimicking the reference image) -->
+        <!-- Sphere 1: Top Right - Header Match -->
+        <div class="absolute top-[15%] right-[15%] w-24 h-24 rounded-full bg-gradient-to-br from-[#fecdd3] via-[#fb7185] to-[#e11d48] shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.2),0_20px_40px_rgba(225,29,72,0.4)] animate-sphere-1 opacity-90 z-[-5]">
+            <div class="absolute top-4 left-4 w-8 h-8 rounded-full bg-white opacity-50 blur-md"></div> <!-- Highlight -->
+        </div>
+
+        <!-- Sphere 2: Bottom Left - Deep Rose -->
+        <div class="absolute bottom-[20%] left-[10%] w-32 h-32 rounded-full bg-gradient-to-br from-[#fff1f2] via-[#fda4af] to-[#e11d48] shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.15),0_20px_40px_rgba(225,29,72,0.3)] animate-sphere-2 opacity-85 z-[-5]">
+             <div class="absolute top-6 left-6 w-10 h-10 rounded-full bg-white opacity-40 blur-lg"></div>
+        </div>
+
+        <!-- Sphere 3: Middle Right - Soft Pearl/Red -->
+        <div class="absolute top-[60%] right-[30%] w-16 h-16 rounded-full bg-gradient-to-br from-[#ffe4e6] to-[#fb7185] shadow-[inset_-5px_-5px_10px_rgba(0,0,0,0.1),0_10px_20px_rgba(225,29,72,0.2)] animate-sphere-3 opacity-70 z-[-5]"></div>
+        
+        <!-- Sphere 4: Top Left (New) - Vibrant Accent -->
+        <div class="absolute top-[25%] left-[20%] w-20 h-20 rounded-full bg-gradient-to-br from-[#fecdd3] to-[#e11d48] shadow-[inset_-8px_-8px_16px_rgba(0,0,0,0.2),0_15px_30px_rgba(225,29,72,0.35)] animate-sphere-2 opacity-80 z-[-5]" style="animation-delay: -5s; animation-duration: 14s;">
+            <div class="absolute top-3 left-3 w-6 h-6 rounded-full bg-white opacity-40 blur-md"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="pt-10 pb-6">
+        <div class="container mx-auto px-6 text-center">
+            <!-- Logo - Updated to look more like the artistic red typography -->
+            <div class="relative inline-block group">
+                <!-- Main text with redder gradient and drop shadow -->
+                <div class="text-[5.5rem] md:text-8xl font-cursive bg-gradient-to-r from-[#e11d48] via-[#f43f5e] to-[#fb7185] bg-clip-text text-transparent drop-shadow-md p-2 cursor-default select-none transition-transform duration-1000 ease-out group-hover:scale-105 relative z-10 leading-tight">
+                    ilay
+                </div>
+                <!-- Decorative abstract sphere hint (CSS only) to mimic the ball in the image -->
+                <div class="absolute top-0 -right-2 md:-right-6 w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br from-[#fecdd3] to-[#e11d48] rounded-full blur-[1px] opacity-80 shadow-lg z-0 animate-pulse"></div>
+                <!-- Swoosh line hint -->
+                <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-[#ffe4e6] rounded-full blur-md -z-10"></div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="mt-8 flex flex-wrap justify-center gap-8 md:gap-16 text-[#881337] font-medium text-lg tracking-wide">
+                <a href="#home" class="hover:text-[#e11d48] transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-[#e11d48] after:transition-all hover:after:w-full">Home</a>
+                <a href="#portfolio" class="hover:text-[#e11d48] transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-[#e11d48] after:transition-all hover:after:w-full">Portfolio</a>
+                <a href="#home" class="hover:text-[#e11d48] transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-[#e11d48] after:transition-all hover:after:w-full" onclick="document.querySelector('#reviews-box').scrollIntoView({behavior: 'smooth'})">Reviews</a>
+                <a href="https://t.me/+3816rWkPnZ4zZjAy" target="_blank" rel="noopener noreferrer" class="hover:text-[#e11d48] transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-[#e11d48] after:transition-all hover:after:w-full">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-6xl">
+        
+        <!-- Hero: Avatar & Testimonials -->
+        <section id="home" class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center mb-32">
+            
+            <!-- Left: Avatar -->
+            <div class="flex flex-col items-center justify-center">
+                <!-- Avatar with reddish glow -->
+                <div class="w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden border-8 border-white/60 shadow-[0_20px_50px_-12px_rgba(225,29,72,0.35)] mb-6 relative bg-[#fff1f2] flex items-center justify-center liquid-hover hover:scale-[1.03] hover:shadow-[0_30px_60px_-10px_rgba(225,29,72,0.4)]">
+                    <img src="https://i.imgur.com/jL897Jj.jpeg" alt="ilay" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/ffe4e6/e11d48?text=ilay'">
+                </div>
+            </div>
+
+            <!-- Right: Testimonials Box -->
+            <div id="reviews-box" class="bg-white/30 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-[0_10px_40px_-10px_rgba(225,29,72,0.1)] border border-rose-100">
+                <h2 class="text-3xl font-medium mb-8 text-[#881337]">Reviews</h2>
+                <div class="space-y-5">
+                    
+                    <!-- Review Item 1 -->
+                    <div class="glass-card p-4 rounded-2xl flex items-center gap-5 liquid-hover hover:translate-x-4 hover:shadow-[0_10px_30px_-5px_rgba(251,113,133,0.4)]">
+                        <div class="w-12 h-12 rounded-full border-2 border-rose-300 flex-shrink-0 overflow-hidden">
+                            <img src="https://i.imgur.com/WtVPTiw.jpeg" alt="Client" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-[#4c0519] leading-tight mb-1">«Классно и оперативно сделал»</p>
+                            <p class="text-sm font-bold text-[#e11d48] opacity-90">— Олег Двиненко</p>
+                        </div>
+                    </div>
+
+                    <!-- Review Item 2 -->
+                    <div class="glass-card p-4 rounded-2xl flex items-center gap-5 liquid-hover hover:translate-x-4 hover:shadow-[0_10px_30px_-5px_rgba(251,113,133,0.4)]">
+                        <div class="w-12 h-12 rounded-full border-2 border-rose-300 flex-shrink-0 overflow-hidden">
+                            <img src="https://i.imgur.com/zPdFtM3.jpeg" alt="Client" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-[#4c0519] leading-tight mb-1">«Все гуд, дальше буду работать с тобой»</p>
+                            <p class="text-sm font-bold text-[#e11d48] opacity-90">— Никита Трост</p>
+                        </div>
+                    </div>
+
+                    <!-- Review Item 3 -->
+                    <div class="glass-card p-4 rounded-2xl flex items-center gap-5 liquid-hover hover:translate-x-4 hover:shadow-[0_10px_30px_-5px_rgba(251,113,133,0.4)]">
+                        <div class="w-12 h-12 rounded-full border-2 border-rose-300 flex-shrink-0 overflow-hidden">
+                            <img src="https://i.imgur.com/u5M6sld.jpeg" alt="Client" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="text-[#4c0519] leading-tight mb-1">«Работой рад!!»</p>
+                            <p class="text-sm font-bold text-[#e11d48] opacity-90">— Виталий Сороков</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="mb-24">
+            <h2 class="text-4xl font-medium mb-12 text-[#881337] text-center drop-shadow-sm">Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                
+                <!-- Video 1 (Top Centered) -->
+                <div class="col-span-1 md:col-span-2 flex justify-center">
+                    <div class="w-full md:w-1/2 video-card bg-white/80 p-3 rounded-[2rem] shadow-sm liquid-hover border border-rose-100 hover:shadow-[0_25px_50px_-12px_rgba(225,29,72,0.3)] cursor-pointer">
+                        <div class="aspect-[9/16] md:aspect-video bg-black rounded-[1.5rem] overflow-hidden shadow-inner relative group">
+                            <video class="w-full h-full object-cover" muted loop playsinline controls poster="https://placehold.co/600x400/ffe4e6/e11d48?text=Play+Video">
+                                <source src="https://i.imgur.com/X67PzBV.mp4" type="video/mp4">
+                            </video>
+                            <!-- Play Icon Overlay -->
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all pointer-events-none">
+                                <div class="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:opacity-0 group-hover:scale-150 transition-all duration-500">
+                                    <svg class="w-6 h-6 text-[#e11d48]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3 (YouTube Short - Left) -->
+                <div class="video-card bg-white/80 p-3 rounded-[2rem] shadow-sm liquid-hover border border-rose-100 hover:shadow-[0_25px_50px_-12px_rgba(225,29,72,0.3)] cursor-pointer">
+                    <div class="aspect-[9/16] md:aspect-video bg-black rounded-[1.5rem] overflow-hidden shadow-inner relative group">
+                        <iframe class="w-full h-full object-cover rounded-[1.5rem]" src="https://www.youtube.com/embed/Sa0juOhU8B0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Video 4 (YouTube Short - Right) -->
+                <div class="video-card bg-white/80 p-3 rounded-[2rem] shadow-sm liquid-hover border border-rose-100 hover:shadow-[0_25px_50px_-12px_rgba(225,29,72,0.3)] cursor-pointer">
+                    <div class="aspect-[9/16] md:aspect-video bg-black rounded-[1.5rem] overflow-hidden shadow-inner relative group">
+                        <iframe class="w-full h-full object-cover rounded-[1.5rem]" src="https://www.youtube.com/embed/neFQ_qQaYYg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Video 2 (Bottom Centered) -->
+                <div class="col-span-1 md:col-span-2 flex justify-center">
+                    <div class="w-full md:w-1/2 video-card bg-white/80 p-3 rounded-[2rem] shadow-sm liquid-hover border border-rose-100 hover:shadow-[0_25px_50px_-12px_rgba(225,29,72,0.3)] cursor-pointer">
+                        <div class="aspect-[9/16] md:aspect-video bg-black rounded-[1.5rem] overflow-hidden shadow-inner relative group">
+                            <video class="w-full h-full object-cover" muted loop playsinline controls poster="https://placehold.co/600x400/ffe4e6/e11d48?text=Play+Video">
+                                <source src="https://i.imgur.com/S4TcKJI.mp4" type="video/mp4">
+                            </video>
+                             <!-- Play Icon Overlay -->
+                             <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all pointer-events-none">
+                                <div class="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:opacity-0 group-hover:scale-150 transition-all duration-500">
+                                    <svg class="w-6 h-6 text-[#e11d48]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Links -->
+            <div class="flex flex-col items-center gap-4 text-center">
+                <div class="animate-bounce text-[#e11d48]">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </div>
+                
+                <a href="https://disk.yandex.ru/d/MMiNye8O_YQ4pQ" target="_blank" rel="noopener noreferrer" 
+                   class="text-xl md:text-2xl font-bold text-[#e11d48] hover:scale-105 transition-transform duration-300 hover:text-[#be123c] relative group">
+                    Все эти работы в полном качестве можно посмотреть тут
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#e11d48] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                
+                <a href="https://t.me/+3816rWkPnZ4zZjAy" target="_blank" rel="noopener noreferrer" 
+                   class="text-lg text-[#e11d48]/80 hover:text-[#e11d48] font-medium italic transition-colors">
+                    ( остальные работы в моем телеграм канале )
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-rose-200 py-10">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[#9f1239] text-sm font-medium">© 2024 ilay Portfolio</p>
+            
+            <a href="https://disk.yandex.ru/d/MMiNye8O_YQ4pQ" target="_blank" rel="noopener noreferrer" 
+               class="text-[#9f1239] text-sm font-medium hover:text-[#e11d48] underline decoration-[#e11d48]/30 hover:decoration-[#e11d48] underline-offset-4 transition-all flex items-center gap-2 group">
+                Video portfolio available on Yandex Disk
+                <span class="inline-block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll adjustment for header if needed (though current design has plenty of padding)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                // For reviews link specifically handled in onclick, but general fallback:
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 3D Scroll Reveal Effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('header > div, #home > div, #reviews-box, .glass-card, h2, .bg-white\\/80');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add a slight stagger effect based on index if multiple items appear at once
+                        // But simple direct activation is smoother for scrolling usually
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, index * 50); // minimal delay just in case
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            elementsToAnimate.forEach(el => {
+                el.classList.add('reveal-3d');
+                observer.observe(el);
+            });
+            
+            // Add perspective to body/container
+            document.body.classList.add('perspective-viewport');
+
+            // Hover Video Playback Logic
+            const videoCards = document.querySelectorAll('.video-card');
+            
+            videoCards.forEach(card => {
+                const video = card.querySelector('video');
+                if (!video) return;
+
+                // Simple hover play
+                card.addEventListener('mouseenter', () => {
+                    if (video.paused) {
+                        video.play().catch(err => console.log('Autoplay prevented', err));
+                    }
+                });
+                
+                // Pause on leave, UNLESS fullscreen
+                card.addEventListener('mouseleave', () => {
+                    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
